@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
         getMtx <- function() return(x)
         
         ## construct setMtx() function that resets cached inverse matrix with
-        ## actual matrix initialized to 'm'
+        ## actual matrix initialized to matrix 'm' being passed
         setMtx <- function(m) {
             x <<- m
             inverse <<- NULL
@@ -22,7 +22,7 @@ makeCacheMatrix <- function(x = matrix()) {
         ## construct getInvMtx() function that returns the cached inverse matrix
         getInvMtx <- function() return(inverse)
         
-        ## construct getMtx() function that cache the inverse matrix of 'x'
+        ## construct setInvMtx() function that cache the inverse matrix ('y') of 'x'
         setInvMtx <- function(y) inverse <<- y
         
         ## returns the get and set accessor functions of matrix and its inverse
@@ -31,11 +31,11 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## This function returns the inverse of the "matrix" by looking into the cache
-## through makeCacheMatrix, or compute it and puts in cache if not exists
-
-cacheSolve <- function(x, ...) {
-       
+## This function returns the inverse of the "matrix" returned by makeCacheMatrix
+## by looking into the cache through getInvMtx()
+## or compute it and puts in cache if not exists through setInvMtx() 
+ 
+cacheSolve <- function(x, ...) {       
   
         ## gets the cached inverse matrix if any
         inverse <- x$getInvMtx()
